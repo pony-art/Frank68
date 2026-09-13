@@ -18,6 +18,7 @@ function Stat({ value, label, testid }) {
 export default function Home() {
   const [content, setContent] = useState(null);
   const [stats, setStats] = useState({ members: 0, approved: 0, total_points: 0 });
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     api.get("/content").then((r) => setContent(r.data)).catch(() => {});
@@ -43,12 +44,26 @@ export default function Home() {
             transition={{ duration: 0.9 }}
             className="mb-8"
           >
-            <div className="relative inline-block">
+            <div
+              className="relative inline-block"
+              style={{ perspective: "800px" }}
+              onMouseMove={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width - 0.5;
+                const py = (e.clientY - r.top) / r.height - 0.5;
+                setTilt({ x: -py * 22, y: px * 22 });
+              }}
+              onMouseLeave={() => setTilt({ x: 0, y: 0 })}
+            >
               <div className="absolute inset-0 blur-2xl bg-red-500/30 rounded-full" />
               <img
                 src="/skull-logo-text.png"
                 alt="شعار حزب محبين فرانك الجيزاوي"
                 className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-2xl border border-red-500/30 object-cover shadow-[0_0_40px_rgba(255,30,60,0.35)]"
+                style={{
+                  transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                  transition: "transform 0.12s ease-out",
+                }}
                 data-testid="hero-logo"
               />
             </div>

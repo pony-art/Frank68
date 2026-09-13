@@ -157,6 +157,17 @@ class SettingsUpdate(BaseModel):
     keyword_cooldown_seconds: Optional[int] = None
 
 
+class TraitorCreate(BaseModel):
+    name: str
+    role_before: Optional[str] = ""
+    crime: str
+    date: Optional[str] = ""
+
+
+class BadgesUpdate(BaseModel):
+    badges: List[str] = []
+
+
 # ----------------------------------------------------------------------------
 # Defaults / seeding
 # ----------------------------------------------------------------------------
@@ -228,6 +239,15 @@ async def seed():
             {"id": str(uuid.uuid4()), "name": "يد القائد", "min_points": 700, "color": "#FF007A"},
         ]
         await db.ranks.insert_many(base_ranks)
+    if await db.traitors.count_documents({}) == 0:
+        await db.traitors.insert_one({
+            "id": str(uuid.uuid4()),
+            "name": "محمد صداح",
+            "role_before": "الرئيس المؤسس (سابقاً)",
+            "crime": "خيانة الحزب والهروب في نص الليل، ثم العودة كمجرم حرب والخيانة من جديد.",
+            "date": "الزمن الأول",
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
 
 
 @app.on_event("startup")
@@ -430,11 +450,21 @@ async def list_members(user: dict = Depends(get_current_user)):
 @api_router.post("/members")
 async def create_member(payload: MemberCreate, user: dict = Depends(get_current_user)):
     doc = {"id": str(uuid.uuid4()), "discord_username": payload.discord_username.strip(),
-           "rank": payload.rank or "مبتدئ", "points": payload.points,
+           "rank": payload.rank or "مبتدئ", "points": payload.points, "badges": [],
            "joined_at": datetime.now(timezone.utc).isoformat()}
     await db.members.insert_one(dict(doc))
     doc.pop("_id", None)
     return doc
+
+
+@api_router.post("/members/{member_id}/badges")
+async def set_badges(member_id: str, payload: BadgesUpdate, user: dict = Depends(get_current_user)):
+    member = await db.members.find_one({"id": member_id})
+    if not member:
+        raise HTTPException(status_code=404, detail="العضو غير موجود")
+    badges = list(dict.fromkeys([b.strip() for b in payload.badges if b.strip()]))
+    await db.members.update_one({"id": member_id}, {"$set": {"badges": badges}})
+    return {"ok": True, "badges": badges}
 
 
 @api_router.post("/members/{member_id}/points")
@@ -522,6 +552,58 @@ async def update_settings(payload: SettingsUpdate, user: dict = Depends(get_curr
 @api_router.get("/logs")
 async def list_logs(user: dict = Depends(get_current_user)):
     return await db.logs.find({}, {"_id": 0}).sort("at", -1).to_list(200)
+
+
+# ----------------------------------------------------------------------------
+# Hall of Shame (traitors)
+# ----------------------------------------------------------------------------
+@api_router.get("/traitors")
+async def list_traitors():
+    return await db.traitors.find({}, {"_id": 0}).sort("created_at", 1).to_list(1000)
+
+
+@api_router.post("/traitors")
+async def create_traitor(payload: TraitorCreate, user: dict = Depends(get_current_user)):
+    doc = {"id": str(uuid.uuid4()), "name": payload.name.strip(),
+           "role_before": payload.role_before or "", "crime": payload.crime.strip(),
+           "date": payload.date or "", "created_at": datetime.now(timezone.utc).isoformat()}
+    await db.traitors.insert_one(dict(doc))
+    doc.pop("_id", None)
+    return doc
+
+
+@api_router.delete("/traitors/{traitor_id}")
+async def delete_traitor(traitor_id: str, user: dict = Depends(get_current_user)):
+    await db.traitors.delete_one({"id": traitor_id})
+    return {"ok": True}
+
+
+# ----------------------------------------------------------------------------
+# Admin stats (for charts)
+# ----------------------------------------------------------------------------
+@api_router.get("/admin/stats")
+async def admin_stats(user: dict = Depends(get_current_user)):
+    pending = await db.applications.count_documents({"status": "pending"})
+    approved = await db.applications.count_documents({"status": "approved"})
+    rejected = await db.applications.count_documents({"status": "rejected"})
+    members_total = await db.members.count_documents({})
+    traitors_total = await db.traitors.count_documents({})
+    members = await db.members.find({}, {"_id": 0, "rank": 1}).to_list(2000)
+    by_rank_map: Dict[str, int] = {}
+    for m in members:
+        r = m.get("rank", "غير محدد")
+        by_rank_map[r] = by_rank_map.get(r, 0) + 1
+    members_by_rank = [{"rank": k, "count": v} for k, v in by_rank_map.items()]
+    return {
+        "applications_by_status": [
+            {"status": "قيد المراجعة", "count": pending},
+            {"status": "مقبول", "count": approved},
+            {"status": "مرفوض", "count": rejected},
+        ],
+        "members_total": members_total,
+        "traitors_total": traitors_total,
+        "members_by_rank": members_by_rank,
+    }
 
 
 # ----------------------------------------------------------------------------

@@ -1,0 +1,35 @@
+{
+  "summary": "Iteration 2 verified all NEW features (intro screen, sound toggle, Hall of Shame public + admin, badges per member, admin stats charts, admin logs) and regressions. Backend: 30/30 pytest pass (20 existing + 10 new in test_new_features.py covering GET/POST/DELETE /api/traitors, POST /api/members/{id}/badges with dedupe+strip+404, GET /api/admin/stats shape+unauth, GET /api/logs with points-action log verification). Frontend Playwright: intro overlay appears on fresh session and dismisses via intro-skip-button; ?nointro=1 correctly bypasses intro; site is fully usable after dismissal (no permanent block); sound-toggle-button icon switches on click; /shame renders seed traitor محمد صداح card; admin login → /admin works; Stats tab loads stats-panel with 2 recharts SVGs; Logs tab loads logs-list; add traitor via admin propagates to public /shame and delete works; badge add via input-badge-<id>/add-badge-<id> shows chip in member-badges-<id> and removal persists (initial FAIL was stale-DOM in test, re-run confirmed PASS). Cleaned up leftover TEST_ members.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Global", "issues": ["AudioContext autoplay warning on first paint (browser policy) — SoundContext should defer AudioContext creation until first user gesture to suppress the warning."]},
+      {"screen": "AuthContext", "issues": ["Still calls /api/auth/me on public pages when no token → 401 noise in console (carryover from iter 1)."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_frank_party.py",
+    "/app/backend/tests/test_new_features.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Nice-to-have) Suppress AudioContext warning by creating/resuming the context inside the sound-toggle click handler rather than on mount.",
+    "(Nice-to-have) Skip /auth/me on public routes when no token/cookie hint is present to eliminate 401 console noise."
+  ],
+  "critical_code_review_comments": [
+    "Admin.jsx is 847 lines — consider splitting Applications/Members/Points/Ranks/Shame/Stats/Logs/Editor/Discord panels into separate files under pages/admin/ for maintainability (>700-line guideline).",
+    "login_attempts lockout still refreshes locked_until on every failure after threshold (server.py ~L279) — carry-over from iter 1; only set locked_until on the exact threshold-crossing failure.",
+    "CORS allow_origins has duplicated fallback 'http://localhost:3000' when FRONTEND_URL env unset — code smell.",
+    "resolve_rank uses max on eligible ranks so ordering is fine, but seed does not enforce a 0-min-points rank — if admin deletes all low-point ranks, new members get whichever ranks[0] the DB returns (not deterministic).",
+    "seed_admin (server.py ~L216) rehashes password only when it differs but never updates the name/role — fine for now, note if admin metadata changes are ever required."
+  ],
+  "updated_files": ["/app/backend/tests/test_new_features.py"],
+  "success_rate": {"backend": "100% (30/30)", "frontend": "100% of tested flows"},
+  "test_credentials": "bony@frank.party / FrankLeader#2026 (verified working)",
+  "seed_data_creation": "Tests create TEST_ prefixed members/traitors/ranks and clean them up. Post-run cleanup removed 4 leftover TEST_ members from earlier UI runs. Seed traitor 'محمد صداح' present as required.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend pytest suite: `pytest /app/backend/tests/ -v` runs 30 tests in ~4s (2 files, xdist enabled). NEW file test_new_features.py auto-loads REACT_APP_BACKEND_URL from frontend/.env. To avoid intro overlay in Playwright always append ?nointro=1 to URLs (localStorage-based session flag skips it too after first dismiss). Recharts renders 2 SVGs inside [data-testid=stats-panel] (applications-by-status + members-by-rank). Members list re-renders after every mutation (load()) — always re-query DOM by data-testid after add/remove badge, do not cache handles."
+}

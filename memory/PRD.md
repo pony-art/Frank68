@@ -32,3 +32,17 @@ Arabic (Egyptian) cyberpunk website + admin dashboard + (future) Discord bot for
 
 ## Next Tasks
 - Gather Discord bot token + IDs from user, then implement bot connected to same backend.
+
+## Implemented (2026-09-13, iteration 2)
+- Cinematic intro screen (red Matrix rain + skull reveal, once per session, skip button, ?nointro=1 bypass)
+- 3D mouse-tilt hero skull + WebAudio click/hover SFX with navbar mute toggle
+- Public Hall of Shame page (/shame) listing traitors (seeded: محمد صداح)
+- Admin: traitors management, per-member badges, Stats tab (recharts), Audit Logs tab
+- Story page (/story) with ويسكي (co-founder) added; spelling القايد→القائد fixed everywhere
+- Theme switched to black + red neon; new skull logo (red) with full Arabic name
+- Backend: GET/POST/DELETE /api/traitors, POST /api/members/{id}/badges, GET /api/admin/stats
+- Verified: 30/30 backend pytest, 100% frontend flows (iteration_2.json)
+
+## Deferred (per user)
+- لوحة الشرف (public leaderboard) + public member profiles — explicitly postponed by user
+- Discord bot (all bot features) — until token/IDs provided

@@ -7,6 +7,10 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // null = checking, false = anon, object = logged in
 
   useEffect(() => {
+    if (!localStorage.getItem("frank_token")) {
+      setUser(false);
+      return;
+    }
     api
       .get("/auth/me")
       .then((res) => setUser(res.data))

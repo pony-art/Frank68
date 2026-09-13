@@ -1,19 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Volume2, VolumeX } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
+import { useSound } from "@/context/SoundContext";
 
 const links = [
   { to: "/", label: "الرئيسية", id: "nav-link-home" },
   { to: "/rules", label: "قوانين الحزب", id: "nav-link-rules" },
   { to: "/story", label: "الحكاية", id: "nav-link-story" },
+  { to: "/shame", label: "سجل الخونة", id: "nav-link-shame" },
   { to: "/apply", label: "تقديم طلب", id: "nav-link-apply" },
 ];
 
 export function Navbar() {
   const { pathname } = useLocation();
   const { user } = useAuth();
+  const { muted, toggle } = useSound();
   const [botConnected, setBotConnected] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -77,6 +80,14 @@ export function Navbar() {
             />
             {botConnected ? "البوت متصل" : "البوت غير متصل"}
           </span>
+          <button
+            onClick={toggle}
+            data-testid="sound-toggle-button"
+            title={muted ? "تشغيل الصوت" : "كتم الصوت"}
+            className="ml-1 p-2 rounded-md text-slate-400 hover:text-red-300 hover:bg-white/5 transition-all"
+          >
+            {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+          </button>
         </div>
 
         <button

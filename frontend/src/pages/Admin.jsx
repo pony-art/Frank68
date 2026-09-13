@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
   Inbox, Users, Coins, Crown, FileEdit, Bot, LogOut, Check, X,
-  Plus, Minus, Trash2, Save, Loader2, Clock,
+  Plus, Minus, Trash2, Save, Loader2, Clock, Skull, BarChart3, ScrollText, Award,
 } from "lucide-react";
+import {
+  BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis,
+} from "recharts";
 import { api, formatApiErrorDetail } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 
@@ -13,6 +16,9 @@ const TABS = [
   { id: "members", name: "الأعضاء", icon: Users, testid: "admin-tab-members" },
   { id: "points", name: "النقاط", icon: Coins, testid: "admin-tab-points" },
   { id: "ranks", name: "الرتب", icon: Crown, testid: "admin-tab-ranks" },
+  { id: "shame", name: "سجل الخونة", icon: Skull, testid: "admin-tab-shame" },
+  { id: "stats", name: "الإحصائيات", icon: BarChart3, testid: "admin-tab-stats" },
+  { id: "logs", name: "السجل", icon: ScrollText, testid: "admin-tab-logs" },
   { id: "editor", name: "المحتوى", icon: FileEdit, testid: "admin-tab-editor" },
   { id: "discord", name: "البوت", icon: Bot, testid: "admin-tab-discord" },
 ];
@@ -83,6 +89,9 @@ export default function Admin() {
       {tab === "members" && <Members />}
       {tab === "points" && <Points />}
       {tab === "ranks" && <Ranks />}
+      {tab === "shame" && <Shame />}
+      {tab === "stats" && <Stats />}
+      {tab === "logs" && <Logs />}
       {tab === "editor" && <Editor />}
       {tab === "discord" && <Discord />}
     </div>
@@ -175,6 +184,7 @@ function Members() {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
+  const [badgeInput, setBadgeInput] = useState({});
 
   const load = useCallback(() => {
     setLoading(true);
@@ -204,6 +214,22 @@ function Members() {
     }
   };
 
+  const saveBadges = async (m, badges) => {
+    try {
+      await api.post(`/members/${m.id}/badges`, { badges });
+      load();
+    } catch (e) {
+      err(e);
+    }
+  };
+  const addBadge = (m) => {
+    const val = (badgeInput[m.id] || "").trim();
+    if (!val) return;
+    saveBadges(m, [...(m.badges || []), val]);
+    setBadgeInput((s) => ({ ...s, [m.id]: "" }));
+  };
+  const removeBadge = (m, b) => saveBadges(m, (m.badges || []).filter((x) => x !== b));
+
   return (
     <div>
       <div className="flex gap-3 mb-6">
@@ -229,20 +255,60 @@ function Members() {
       ) : (
         <div className="grid sm:grid-cols-2 gap-4" data-testid="members-list">
           {members.map((m) => (
-            <div key={m.id} className="cyber-card rounded-xl p-5 flex items-center justify-between">
-              <div>
-                <div className="font-bold text-red-300">{m.discord_username}</div>
-                <div className="text-sm text-slate-400 mt-1">
-                  <span className="text-rose-400">{m.rank}</span> · {m.points} نقطة
+            <div key={m.id} className="cyber-card rounded-xl p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-bold text-red-300">{m.discord_username}</div>
+                  <div className="text-sm text-slate-400 mt-1">
+                    <span className="text-rose-400">{m.rank}</span> · {m.points} نقطة
+                  </div>
+                </div>
+                <button
+                  onClick={() => del(m.id)}
+                  className="text-rose-400 hover:text-rose-300 p-2"
+                  data-testid="admin-delete-member-button"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/5">
+                <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-2">
+                  <Award size={13} className="text-red-400" /> الشارات
+                </div>
+                <div className="flex flex-wrap gap-2 mb-2" data-testid={`member-badges-${m.id}`}>
+                  {(m.badges || []).length === 0 && (
+                    <span className="text-xs text-slate-600">لا توجد شارات</span>
+                  )}
+                  {(m.badges || []).map((b) => (
+                    <span
+                      key={b}
+                      className="text-xs font-bold px-2.5 py-1 rounded-full border border-red-500/40 bg-red-500/10 text-red-200 flex items-center gap-1"
+                    >
+                      {b}
+                      <button onClick={() => removeBadge(m, b)} className="hover:text-white">
+                        <X size={11} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    value={badgeInput[m.id] || ""}
+                    onChange={(e) => setBadgeInput((s) => ({ ...s, [m.id]: e.target.value }))}
+                    onKeyDown={(e) => e.key === "Enter" && addBadge(m)}
+                    placeholder="شارة جديدة (مثلاً: مؤسس)"
+                    data-testid={`input-badge-${m.id}`}
+                    className="cyber-input rounded-lg px-3 py-1.5 flex-1 text-right text-sm"
+                  />
+                  <button
+                    onClick={() => addBadge(m)}
+                    data-testid={`add-badge-${m.id}`}
+                    className="cyber-btn rounded-lg px-3 py-1.5 text-sm font-bold"
+                  >
+                    <Plus size={14} />
+                  </button>
                 </div>
               </div>
-              <button
-                onClick={() => del(m.id)}
-                className="text-rose-400 hover:text-rose-300 p-2"
-                data-testid="admin-delete-member-button"
-              >
-                <Trash2 size={18} />
-              </button>
             </div>
           ))}
         </div>
@@ -557,6 +623,158 @@ function Discord() {
       <button onClick={save} disabled={saving} data-testid="admin-save-settings-button" className="cyber-btn rounded-lg px-6 py-3 font-bold flex items-center gap-2 disabled:opacity-60">
         {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />} حفظ الإعدادات
       </button>
+    </div>
+  );
+}
+
+/* ---------------- Hall of Shame (traitors) ---------------- */
+function Shame() {
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [f, setF] = useState({ name: "", role_before: "", crime: "", date: "" });
+
+  const load = useCallback(() => {
+    setLoading(true);
+    api.get("/traitors").then((r) => setList(r.data)).catch(err).finally(() => setLoading(false));
+  }, []);
+  useEffect(() => load(), [load]);
+
+  const add = async () => {
+    if (!f.name.trim() || !f.crime.trim()) {
+      toast.error("الاسم والتهمة مطلوبين");
+      return;
+    }
+    try {
+      await api.post("/traitors", f);
+      setF({ name: "", role_before: "", crime: "", date: "" });
+      toast.success("تمت الإضافة لسجل الخونة");
+      load();
+    } catch (e) {
+      err(e);
+    }
+  };
+  const del = async (id) => {
+    try {
+      await api.delete(`/traitors/${id}`);
+      toast.success("تم الحذف من السجل");
+      load();
+    } catch (e) {
+      err(e);
+    }
+  };
+
+  return (
+    <div>
+      <div className="cyber-card rounded-xl p-5 mb-6 grid sm:grid-cols-2 gap-3">
+        <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="اسم الخاين" data-testid="input-traitor-name" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
+        <input value={f.role_before} onChange={(e) => setF({ ...f, role_before: e.target.value })} placeholder="منصبه قبل الخيانة" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
+        <input value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} placeholder="التاريخ" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
+        <input value={f.crime} onChange={(e) => setF({ ...f, crime: e.target.value })} placeholder="التهمة" data-testid="input-traitor-crime" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
+        <button onClick={add} data-testid="admin-add-traitor-button" className="cyber-btn rounded-lg px-5 py-2.5 font-bold flex items-center justify-center gap-2 sm:col-span-2">
+          <Plus size={16} /> إضافة للسجل الأحمر
+        </button>
+      </div>
+      {loading ? <Spinner /> : !list.length ? <Empty text="السجل فاضي" /> : (
+        <div className="space-y-4" data-testid="traitors-list">
+          {list.map((t) => (
+            <div key={t.id} className="cyber-card rounded-xl p-5 border-red-500/30 flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <Skull className="text-red-400 mt-1 shrink-0" size={22} />
+                <div>
+                  <div className="font-display text-lg font-extrabold text-red-300">{t.name}</div>
+                  {t.role_before && <div className="text-xs text-slate-500 mt-0.5">{t.role_before}</div>}
+                  <div className="text-sm text-slate-300 mt-1">{t.crime}</div>
+                  {t.date && <div className="text-xs font-mono text-slate-600 mt-1">{t.date}</div>}
+                </div>
+              </div>
+              <button onClick={() => del(t.id)} className="text-rose-400 hover:text-rose-300 p-2"><Trash2 size={18} /></button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------------- Stats ---------------- */
+const CHART_COLORS = ["#f59e0b", "#22c55e", "#f43f5e", "#FF1E3C", "#C40021", "#FF4D6D"];
+function Stats() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    api.get("/admin/stats").then((r) => setData(r.data)).catch(err);
+  }, []);
+  if (!data) return <Spinner />;
+
+  const cards = [
+    { label: "إجمالي الأعضاء", value: data.members_total, color: "text-red-300" },
+    { label: "الخونة في السجل", value: data.traitors_total, color: "text-rose-300" },
+    { label: "طلبات قيد المراجعة", value: data.applications_by_status.find((x) => x.status === "قيد المراجعة")?.count || 0, color: "text-amber-300" },
+    { label: "طلبات مقبولة", value: data.applications_by_status.find((x) => x.status === "مقبول")?.count || 0, color: "text-emerald-300" },
+  ];
+
+  return (
+    <div className="space-y-8" data-testid="stats-panel">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {cards.map((c) => (
+          <div key={c.label} className="cyber-card rounded-xl p-5">
+            <div className={`text-3xl font-extrabold ${c.color}`}>{c.value}</div>
+            <div className="text-xs text-slate-400 mt-1">{c.label}</div>
+          </div>
+        ))}
+      </div>
+      <div className="grid lg:grid-cols-2 gap-6">
+        <div className="cyber-card rounded-xl p-5">
+          <h3 className="font-bold text-red-300 mb-4">الطلبات حسب الحالة</h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <PieChart>
+              <Pie data={data.applications_by_status} dataKey="count" nameKey="status" outerRadius={90} label>
+                {data.applications_by_status.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
+              </Pie>
+              <Tooltip contentStyle={{ background: "#12070a", border: "1px solid #FF1E3C55", borderRadius: 8 }} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="cyber-card rounded-xl p-5">
+          <h3 className="font-bold text-red-300 mb-4">الأعضاء حسب الرتبة</h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={data.members_by_rank}>
+              <XAxis dataKey="rank" tick={{ fill: "#94a3b8", fontSize: 12 }} />
+              <YAxis allowDecimals={false} tick={{ fill: "#94a3b8", fontSize: 12 }} />
+              <Tooltip cursor={{ fill: "#FF1E3C11" }} contentStyle={{ background: "#12070a", border: "1px solid #FF1E3C55", borderRadius: 8 }} />
+              <Bar dataKey="count" fill="#FF1E3C" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Logs (audit) ---------------- */
+function Logs() {
+  const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    api.get("/logs").then((r) => setLogs(r.data)).catch(err).finally(() => setLoading(false));
+  }, []);
+  const labelMap = { approve: "قبول طلب", reject: "رفض طلب", points: "تعديل نقاط" };
+  if (loading) return <Spinner />;
+  if (!logs.length) return <Empty text="مفيش عمليات مسجلة لسه" />;
+  return (
+    <div className="space-y-3" data-testid="logs-list">
+      {logs.map((l, i) => (
+        <div key={l.id || i} className="cyber-card rounded-xl p-4 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-3">
+            <ScrollText size={16} className="text-red-400" />
+            <span className="text-sm font-bold text-red-200">{labelMap[l.action] || l.action}</span>
+            <span className="text-sm text-slate-300">{l.target}</span>
+            {typeof l.detail !== "undefined" && l.detail !== "" && (
+              <span className="text-xs font-mono text-slate-500">{String(l.detail)}</span>
+            )}
+          </div>
+          {l.at && <span className="text-xs font-mono text-slate-600">{new Date(l.at).toLocaleString("ar-EG")}</span>}
+        </div>
+      ))}
     </div>
   );
 }
