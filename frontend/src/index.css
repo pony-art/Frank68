@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg: #06070b;
+    --surface: #0b0e14;
+    --card: #10141f;
+    --cyan: #00f0ff;
+    --purple: #d000ff;
+    --pink: #ff007a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: #f1f5f9;
+    font-family: "Cairo", "Tajawal", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    direction: rtl;
+    overflow-x: hidden;
+}
+
+code,
+.font-mono {
+    font-family: "Fira Code", monospace;
+}
+
+.font-display {
+    font-family: "Changa", "Cairo", sans-serif;
+}
+
+::selection {
+    background: var(--pink);
+    color: #000;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #06070b;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--cyan), var(--purple));
+    border-radius: 8px;
+}
+
+@layer base {
+    :root {
+        --background: 222 47% 4%;
+        --foreground: 210 40% 96%;
+        --card: 222 40% 9%;
+        --card-foreground: 210 40% 96%;
+        --popover: 222 47% 6%;
+        --popover-foreground: 210 40% 96%;
+        --primary: 186 100% 50%;
+        --primary-foreground: 222 47% 4%;
+        --secondary: 222 30% 14%;
+        --secondary-foreground: 210 40% 96%;
+        --muted: 222 30% 14%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 286 100% 50%;
+        --accent-foreground: 210 40% 96%;
+        --destructive: 342 100% 55%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 222 30% 18%;
+        --input: 222 30% 16%;
+        --ring: 186 100% 50%;
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+}
+
+/* ---------- Cyberpunk utilities ---------- */
+.neon-cyan {
+    color: var(--cyan);
+    text-shadow:
+        0 0 8px rgba(0, 240, 255, 0.7),
+        0 0 20px rgba(0, 240, 255, 0.4);
+}
+.neon-pink {
+    color: var(--pink);
+    text-shadow:
+        0 0 8px rgba(255, 0, 122, 0.7),
+        0 0 20px rgba(255, 0, 122, 0.4);
+}
+
+.neon-gradient-text {
+    background: linear-gradient(
+        90deg,
+        var(--cyan),
+        var(--purple),
+        var(--pink)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.cyber-grid {
+    background-image:
+        linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(
+            to bottom,
+            rgba(0, 240, 255, 0.05) 1px,
+            transparent 1px
+        );
+    background-size: 4rem 4rem;
+}
+
+.scanlines::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.12),
+        rgba(0, 0, 0, 0.12) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    z-index: 50;
+    opacity: 0.4;
+}
+
+.cyber-card {
+    background: rgba(16, 20, 31, 0.75);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    backdrop-filter: blur(12px);
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+}
+.cyber-card:hover {
+    border-color: rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+}
+
+.cyber-btn {
+    position: relative;
+    border: 1px solid rgba(0, 240, 255, 0.5);
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--cyan);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
+}
+.cyber-btn:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    transform: translateY(-2px);
+}
+.cyber-btn:active {
+    transform: scale(0.97);
+}
+
+.cyber-btn-pink {
+    border-color: rgba(255, 0, 122, 0.5);
+    background: rgba(255, 0, 122, 0.08);
+    color: var(--pink);
+}
+.cyber-btn-pink:hover {
+    background: var(--pink);
+    color: #000;
+    box-shadow: 0 0 25px rgba(255, 0, 122, 0.6);
+}
+
+.cyber-input {
+    background: rgba(11, 14, 20, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #f1f5f9;
+    transition: all 0.25s ease;
+}
+.cyber-input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    outline: none;
+}
+
+/* Glitch heading */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    overflow: hidden;
+}
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--pink);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--cyan);
+    animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+@keyframes glitch-anim {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 1px);
+    }
+    40% {
+        transform: translate(-1px, -1px);
+    }
+    60% {
+        transform: translate(2px, 1px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+@keyframes glitch-anim2 {
+    0% {
+        transform: translate(0);
+    }
+    25% {
+        transform: translate(1px, -1px);
+    }
+    50% {
+        transform: translate(-1px, 1px);
+    }
+    75% {
+        transform: translate(1px, 1px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes flicker {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    45% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    55% {
+        opacity: 1;
+    }
+}
+.flicker {
+    animation: flicker 4s infinite;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-up {
+    animation: fadeUp 0.7s ease both;
+}
+
+@keyframes typeReveal {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+.type-reveal {
+    animation: typeReveal 1.4s steps(30) both;
+}
+
+.ambient-blob {
+    position: fixed;
+    border-radius: 9999px;
+    filter: blur(140px);
+    pointer-events: none;
+    z-index: 0;
+}

@@ -1,0 +1,28 @@
+{
+  "summary": "First full test run for Frank El Gizawy Party MVP. Backend: 20/20 pytest tests pass covering auth (login OK/bad/me/unauth), public content/questions/stats/bot-status, applications submit+approve+reject with member creation, members CRUD, points delta with rank auto-recompute + clamp to 0, ranks CRUD, content/questions/settings PUT with persistence, and unauthenticated access rejected. Frontend Playwright: Home renders Arabic title/subtitle + fixed rules + live stats; Rules page loads; Apply form submits and shows success screen; Login wrong password shows toast/error and stays on /login; correct login navigates to /admin; Applications tab shows pending and both Approve & Reject work; Members tab add + delete works; Points tab + and - buttons update points and rank; Ranks tab add works; Editor tab saves content and questions; Discord tab saves settings; logout returns to /login; visiting /admin while logged out redirects to /login. No blocking issues found.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Global (AuthContext)", "issues": ["Public pages (Home/Rules/Apply) trigger a /api/auth/me call that returns 401 for unauthenticated users, producing console errors. Not user-facing but noisy; could suppress 401 log or skip me() when no token/cookie is known."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_frank_party.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Login brute-force lockout resets locked_until on EVERY failed attempt (server.py ~L260) — after 5 failures each subsequent wrong attempt keeps pushing the 15-min window forward. Consider only setting locked_until when count crosses the threshold, not on every failure.",
+    "resolve_rank falls back to ranks[0] when no rank matches (should never happen if a 0-min rank exists) but sorting is not guaranteed there — safer to sort by min_points first.",
+    "CORS: allow_credentials=True combined with FRONTEND_URL from env is fine, but the fallback 'http://localhost:3000' is duplicated in the list; harmless but a code smell.",
+    "Public /api/content and /api/questions do no null-check if seed didn't run (rare); a 500 would occur if docs missing. Consider guarding with defaults.",
+    "AuthContext appears to call /auth/me on every page load without a token check, generating 401 console errors on public pages."
+  ],
+  "updated_files": ["/app/backend/tests/test_frank_party.py"],
+  "success_rate": {"backend": "100% (20/20)", "frontend": "100% of tested flows"},
+  "test_credentials": "bony@frank.party / FrankLeader#2026 (seeded, verified)",
+  "seed_data_creation": "Tests create TEST_-prefixed applications, members, ranks; approved-flow members remain in DB (used TEST_ prefix for easy cleanup).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend pytest at /app/backend/tests/test_frank_party.py runs green in ~3s. Note: repeated wrong-password logins from same IP will lock admin for 15 minutes (429). If lockout hit, clear via: `mongo test_database --eval 'db.login_attempts.deleteMany({})'`. Discord bot is intentionally not implemented — settings tab just persists config. All data-testids listed in the review request are present in the DOM.",
+  "rca of the issue": "N/A — no bugs to RCA."
+}

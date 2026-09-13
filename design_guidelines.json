@@ -1,0 +1,157 @@
+{
+  "project_name": "حزب محبين فرانك الجيزاوي - Frank El Gizawy Party System",
+  "app_type": "hybrid_fullstack",
+  "direction": "rtl",
+  "language": "ar",
+  "archetype": "ARCHETYPE 7: ELECTRIC & NEON (Cyberpunk & Mysterious Tech)",
+  "emotional_tone": "Mysterious, High-Tech, Elite Cyber-Alliance, Energetic, Authoritative Leader Cult Aesthetic",
+  "typography": {
+    "font_family_primary": "'Cairo', 'IBM Plex Sans Arabic', sans-serif",
+    "font_family_display": "'Changa', 'Tajawal', sans-serif",
+    "font_family_mono": "'Fira Code', 'Courier New', monospace",
+    "font_imports": [
+      "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Changa:wght@500;700;800&family=Tajawal:wght@400;700;900&display=swap"
+    ],
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight",
+      "h3": "text-xl sm:text-2xl font-bold",
+      "h4": "text-lg sm:text-xl font-semibold",
+      "body": "text-base leading-relaxed text-slate-300",
+      "small": "text-sm text-slate-400",
+      "mono_label": "font-mono text-xs uppercase tracking-widest text-cyan-400"
+    },
+    "effects": {
+      "glitch_class": "cyber-glitch-text",
+      "neon_gradient_text": "bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent"
+    }
+  },
+  "colors": {
+    "background_dark": "#06070B",
+    "surface_dark": "#0B0E14",
+    "surface_card": "#10141F",
+    "surface_card_border": "rgba(0, 240, 255, 0.2)",
+    "neon_cyan": "#00F0FF",
+    "neon_purple": "#D000FF",
+    "neon_pink": "#FF007A",
+    "neon_yellow": "#FFE600",
+    "text_primary": "#F1F5F9",
+    "text_muted": "#94A3B8",
+    "status_success": "#00FF66",
+    "status_danger": "#FF2A6D",
+    "status_warning": "#FFB800",
+    "shadow_glow": {
+      "cyan": "0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2)",
+      "purple": "0 0 20px rgba(208, 0, 255, 0.4), 0 0 40px rgba(208, 0, 255, 0.2)",
+      "pink": "0 0 20px rgba(255, 0, 122, 0.4), 0 0 40px rgba(255, 0, 122, 0.2)"
+    }
+  },
+  "background_effects": {
+    "grid_pattern": "bg-[linear-gradient(to_right,#00f0ff0a_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff0a_1px,transparent_1px)] bg-[size:4rem_4rem]",
+    "scanlines": "repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px)",
+    "ambient_blobs": [
+      "top-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none",
+      "bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-fuchsia-600/10 rounded-full blur-[150px] pointer-events-none"
+    ]
+  },
+  "fixed_party_rules": [
+    "ممنوع الكذب تماماً داخل الحزب أو في الاستبيانات",
+    "ممنوع تكون سيمب لأي شخص تحت أي ظرف",
+    "ممنوع تسأل مين فرانك الجيزاوي (فرانك فوق الجميع والكل يعرف قدره)"
+  ],
+  "image_urls": {
+    "hero_bg": "https://images.unsplash.com/photo-1786118057090-588c9c19814e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwzfHxjeWJlcnB1bmslMjBuZW9uJTIwZGFyayUyMGNpdHklMjBnbGl0Y2glMjBnYW1pbmd8ZW58MHx8fHwxNzg5MzE2MzYxfDA&ixlib=rb-4.1.0&q=85",
+    "party_ambiance": "https://images.unsplash.com/photo-1600748338443-f7ea1054ed6b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwyfHxjeWJlcnB1bmslMjBuZW9uJTIwZGFyayUyMGNpdHklMjBnbGl0Y2glMjBnYW1pbmd8ZW58MHx8fHwxNzg5MzE2MzYxfDA&ixlib=rb-4.1.0&q=85",
+    "cyber_city": "https://images.unsplash.com/photo-1600998837340-4887228e311f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwxfHxjeWJlcnB1bmslMjBuZW9uJTIwZGFyayUyMGNpdHklMjBnbGl0Y2glMjBnYW1pbmd8ZW58MHx8fHwxNzg5MzE2MzYxfDA&ixlib=rb-4.1.0&q=85"
+  },
+  "component_structure": {
+    "navigation": {
+      "type": "Cyber Glassmorphism Floating Header (RTL)",
+      "elements": [
+        "شعار الحزب (رمز فرانك الجيزاوي مع تأثير توهج نيون)",
+        "روابط التنقل: الرئيسية | قوانين الحزب | تقديم طلب | البوت | تسجيل دخول القايد",
+        "زر CTA: انضم للحزب الآن (neon glow cyber button)",
+        "مؤشر حالة البوت (متصل 🟢 / غير متصل 🔴)"
+      ]
+    },
+    "hero_section": {
+      "headline": "حزب محبين فرانك الجيزاوي",
+      "subheadline": "النظام السايبراني الأعظم لإدارة الأعضاء، الرتب، والولاء المطلق. هل أنت مستعد للانضمام للنخبة؟",
+      "cta_primary": "قدّم طلب انضمام الآن",
+      "cta_secondary": "استكشف قوانين الحزب",
+      "decorations": [
+        "عداد تنازلي رقمي أو إحصائيات سايبرانية (عدد الأعضاء، الطلبات المقبولة، النقاط الإجمالية)",
+        "بطاقة قواعد الدخول الثابتة البارزة بحواف نيون متوهجة"
+      ]
+    },
+    "fixed_rules_section": {
+      "title": "قوانين الدخول الثابتة (الخطوط الحمراء)",
+      "badge": "تحذير نظام فرانك",
+      "cards": [
+        { "id": 1, "title": "القانون الأول", "desc": "ممنوع الكذب — الشفافية والولاء التام للحزب" },
+        { "id": 2, "title": "القانون الثاني", "desc": "ممنوع تكون سيمب — العزة والكبرياء أساس العضوية" },
+        { "id": 3, "title": "القانون الثالث", "desc": "ممنوع تسأل مين فرانك الجيزاوي — الأسئلة غير المسموح بها تنهي مسيرتك" }
+      ]
+    },
+    "application_form_section": {
+      "title": "استمارة التقديم على الحزب",
+      "subtitle": "أدخل معرف الديسكورد الخاص بك وأجب عن الأسئلة بدقة ليتم مراجعتها من قبل القايد",
+      "fields": [
+        "اسم حساب الديسكورد (Discord Tag/ID)",
+        "أسئلة التقديم التفاعلية (ديناميكية قابلة للتعديل من لوحة التحكم)",
+        "إقرار الالتزام بقوانين الحزب (Checkbox سايبراني)"
+      ]
+    },
+    "admin_panel": {
+      "title": "لوحة تحكم القايد (Leader Control Center)",
+      "tabs": [
+        { "id": "applications", "name": "مراجعة الطلبات (قبول / رفض)" },
+        { "id": "members", "name": "إدارة الأعضاء والبيانات" },
+        { "id": "points", "name": "إدارة النقاط يدوياً" },
+        { "id": "ranks", "name": "إدارة الرتب والترقيات" },
+        { "id": "content_editor", "name": "تعديل القوانين ونصوص الموقع" },
+        { "id": "discord_bot", "name": "إعدادات وتكامل بوت الديسكورد" }
+      ]
+    }
+  },
+  "interactive_states": {
+    "buttons": "transition-all duration-300 hover:shadow-[0_0_25px_rgba(0,240,255,0.6)] hover:scale-105 active:scale-95 border border-cyan-500/50 bg-cyan-950/40 text-cyan-300 hover:bg-cyan-500 hover:text-black",
+    "cards": "border border-slate-800 bg-slate-950/80 backdrop-blur-md hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(0,240,255,0.15)] transition-all duration-300",
+    "inputs": "bg-slate-900/90 border border-slate-700 text-slate-100 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all outline-none text-right"
+  },
+  "testing_attributes": {
+    "nav_logo": "data-testid=\"nav-brand-logo\"",
+    "nav_home": "data-testid=\"nav-link-home\"",
+    "nav_rules": "data-testid=\"nav-link-rules\"",
+    "nav_apply": "data-testid=\"nav-link-apply\"",
+    "nav_admin": "data-testid=\"nav-link-admin\"",
+    "nav_bot_status": "data-testid=\"nav-bot-status-badge\"",
+    "hero_cta_apply": "data-testid=\"hero-cta-apply-button\"",
+    "hero_cta_rules": "data-testid=\"hero-cta-rules-button\"",
+    "fixed_rules_container": "data-testid=\"fixed-entry-rules-container\"",
+    "apply_form": "data-testid=\"join-application-form\"",
+    "apply_discord_input": "data-testid=\"input-discord-username\"",
+    "apply_submit_btn": "data-testid=\"submit-application-button\"",
+    "admin_login_form": "data-testid=\"admin-login-form\"",
+    "admin_login_pass_input": "data-testid=\"input-admin-password\"",
+    "admin_login_submit_btn": "data-testid=\"submit-admin-login\"",
+    "admin_tab_applications": "data-testid=\"admin-tab-applications\"",
+    "admin_tab_members": "data-testid=\"admin-tab-members\"",
+    "admin_tab_points": "data-testid=\"admin-tab-points\"",
+    "admin_tab_ranks": "data-testid=\"admin-tab-ranks\"",
+    "admin_tab_editor": "data-testid=\"admin-tab-editor\"",
+    "admin_app_approve_btn": "data-testid=\"admin-approve-application-button\"",
+    "admin_app_reject_btn": "data-testid=\"admin-reject-application-button\"",
+    "admin_add_points_btn": "data-testid=\"admin-add-points-button\"",
+    "admin_update_rules_btn": "data-testid=\"admin-update-rules-button\""
+  },
+  "instructions_to_main_agent": [
+    "IMPORTANT: Set `dir='rtl'` on html element and body text alignment to right.",
+    "Import Arabic Google Fonts in index.html or index.css (@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Changa:wght@500;700;800&display=swap')).",
+    "Apply `font-family: 'Cairo', sans-serif;` globally in body.",
+    "Use custom cyberpunk style classes for neon borders, glitch headings, and scanline overlays.",
+    "Always provide realistic mock data for members, applications, ranks, and points so the platform feels fully populated and responsive.",
+    "Add toast feedback via `sonner` for all application submissions, admin approvals/rejections, rules updates, and point changes.",
+    "Ensure all interactive elements have explicit `data-testid` attributes as listed in `testing_attributes`."
+  ]
+}
