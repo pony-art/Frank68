@@ -17,7 +17,7 @@ export default function Login() {
     setLoading(true);
     try {
       await login(email, password);
-      toast.success("أهلاً بيك يا قايد");
+      toast.success("أهلاً بيك يا قائد");
       navigate("/admin");
     } catch (err) {
       toast.error(formatApiErrorDetail(err.response?.data?.detail));
@@ -37,7 +37,7 @@ export default function Login() {
           <Terminal size={14} /> نظام الدخول المشفّر
         </div>
         <h1 className="font-display text-3xl font-extrabold neon-cyan mb-8 flex items-center gap-2">
-          <Lock size={26} /> دخول القايد
+          <Lock size={26} /> دخول القائد
         </h1>
 
         <label className="block text-sm font-semibold text-slate-200 mb-2">

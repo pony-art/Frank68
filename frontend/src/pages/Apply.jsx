@@ -28,7 +28,7 @@ export default function Apply() {
         agreed_rules: agreed,
       });
       setDone(true);
-      toast.success("تم إرسال طلبك للقايد — استنى القرار");
+      toast.success("تم إرسال طلبك للقائد — استنى القرار");
     } catch (err) {
       toast.error(formatApiErrorDetail(err.response?.data?.detail));
     } finally {
@@ -49,7 +49,7 @@ export default function Apply() {
             تم استلام طلبك
           </h1>
           <p className="text-slate-300 leading-relaxed">
-            القايد بوني هيراجع طلبك قريباً. لو اتقبلت، البوت هيديك رتبتك ويرحّب بيك.
+            القائد بوني هيراجع طلبك قريباً. لو اتقبلت، البوت هيديك رتبتك ويرحّب بيك.
             فرانك يراقب...
           </p>
         </motion.div>
@@ -125,7 +125,7 @@ export default function Apply() {
             <Loader2 className="animate-spin" size={18} />
           ) : (
             <>
-              أرسل الطلب للقايد <Send size={16} />
+              أرسل الطلب للقائد <Send size={16} />
             </>
           )}
         </button>

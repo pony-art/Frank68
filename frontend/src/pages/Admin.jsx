@@ -46,7 +46,7 @@ export default function Admin() {
             Leader Control Center
           </div>
           <h1 className="font-display text-3xl sm:text-4xl font-extrabold neon-cyan">
-            لوحة تحكم القايد
+            لوحة تحكم القائد
           </h1>
         </div>
         <button
@@ -269,7 +269,7 @@ function Points() {
     try {
       const { data } = await api.post(`/members/${id}/points`, {
         delta: sign * Math.abs(val),
-        reason: "تعديل يدوي من القايد",
+        reason: "تعديل يدوي من القائد",
       });
       toast.success(`النقاط: ${data.points} · الرتبة: ${data.rank}`);
       load();
@@ -546,7 +546,7 @@ function Discord() {
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Server (Guild) ID" value={s.discord_guild_id} onChange={(v) => setField("discord_guild_id", v)} mono />
         <Field label="قناة الإشعارات ID" value={s.discord_notify_channel_id} onChange={(v) => setField("discord_notify_channel_id", v)} mono />
-        <Field label="ID القايد (للـ DM)" value={s.discord_admin_user_id} onChange={(v) => setField("discord_admin_user_id", v)} mono />
+        <Field label="ID القائد (للـ DM)" value={s.discord_admin_user_id} onChange={(v) => setField("discord_admin_user_id", v)} mono />
         <Field label="ID رتبة القبول الأوتوماتيك" value={s.auto_role_id} onChange={(v) => setField("auto_role_id", v)} mono />
       </div>
       <Field label="رسالة الترحيب الغامضة" value={s.welcome_message} onChange={(v) => setField("welcome_message", v)} textarea />

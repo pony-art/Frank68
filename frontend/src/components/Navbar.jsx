@@ -64,7 +64,7 @@ export function Navbar() {
             data-testid="nav-link-admin"
             className="px-4 py-2 rounded-md text-sm font-semibold text-rose-300 hover:bg-rose-500/10 transition-all"
           >
-            {user ? "لوحة القايد" : "دخول القايد"}
+            {user ? "لوحة القائد" : "دخول القائد"}
           </Link>
           <span
             data-testid="nav-bot-status-badge"
@@ -105,7 +105,7 @@ export function Navbar() {
             onClick={() => setOpen(false)}
             className="px-4 py-2 rounded-md text-sm font-semibold text-rose-300"
           >
-            {user ? "لوحة القايد" : "دخول القايد"}
+            {user ? "لوحة القائد" : "دخول القائد"}
           </Link>
         </div>
       )}

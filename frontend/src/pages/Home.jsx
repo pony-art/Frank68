@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-white/5 mt-10 py-8 text-center text-xs text-slate-500 font-mono">
-        © حزب محبين فرانك الجيزاوي — كل الحقوق تحت راية القايد بوني
+        © حزب محبين فرانك الجيزاوي — كل الحقوق تحت راية القائد بوني
       </footer>
     </div>
   );

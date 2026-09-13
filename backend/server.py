@@ -166,10 +166,10 @@ DEFAULT_CONTENT = {
     "party_subtitle": "النظام السايبراني الأعظم لإدارة الأعضاء، الرتب، والولاء المطلق. هل أنت مستعد للانضمام للنخبة؟",
     "about_text": "نحن نخبة الديسكورد. حزب سرّي يجمع المخلصين تحت راية فرانك الجيزاوي. الولاء أولاً، والعزة دائماً.",
     "party_rules": [
-        "احترم القايد بوني وكل أعضاء الحزب.",
+        "احترم القائد بوني وكل أعضاء الحزب.",
         "ممنوع السبام أو الإزعاج في القنوات.",
         "النقاط تُمنح بالنشاط والولاء وتُخصم بالمخالفات.",
-        "قرار القايد نهائي في القبول والرفض والترقية.",
+        "قرار القائد نهائي في القبول والرفض والترقية.",
     ],
     "fixed_rules": [
         "ممنوع الكذب تماماً داخل الحزب أو في الاستبيانات",
@@ -206,7 +206,7 @@ async def seed():
     if existing is None:
         await db.users.insert_one({
             "email": admin_email, "password_hash": hash_password(admin_password),
-            "name": "القايد بوني", "role": "admin",
+            "name": "القائد بوني", "role": "admin",
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
         logger.info("Admin seeded")
@@ -225,7 +225,7 @@ async def seed():
             {"id": str(uuid.uuid4()), "name": "مبتدئ", "min_points": 0, "color": "#94A3B8"},
             {"id": str(uuid.uuid4()), "name": "عضو موثوق", "min_points": 100, "color": "#00F0FF"},
             {"id": str(uuid.uuid4()), "name": "نخبة", "min_points": 300, "color": "#D000FF"},
-            {"id": str(uuid.uuid4()), "name": "يد القايد", "min_points": 700, "color": "#FF007A"},
+            {"id": str(uuid.uuid4()), "name": "يد القائد", "min_points": 700, "color": "#FF007A"},
         ]
         await db.ranks.insert_many(base_ranks)
 
@@ -359,7 +359,7 @@ async def submit_application(payload: ApplicationCreate):
         "reviewed_by": None,
     }
     await db.applications.insert_one(dict(doc))
-    logger.info(f"[DISCORD-NOTIFY] طلب جديد من {doc['discord_username']} — إشعار للقايد (DM + قناة)")
+    logger.info(f"[DISCORD-NOTIFY] طلب جديد من {doc['discord_username']} — إشعار للقائد (DM + قناة)")
     doc.pop("_id", None)
     return doc
 
