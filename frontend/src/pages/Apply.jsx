@@ -79,7 +79,7 @@ export default function Apply() {
             data-testid="input-discord-username"
             value={discord}
             onChange={(e) => setDiscord(e.target.value)}
-            placeholder="مثال: bony#0001 أو bony"
+            placeholder="مثال: pony#0001 أو pony"
             className="cyber-input w-full rounded-lg px-4 py-3 text-right"
           />
         </div>

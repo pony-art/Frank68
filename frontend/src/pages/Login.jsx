@@ -49,7 +49,7 @@ export default function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="cyber-input w-full rounded-lg px-4 py-3 mb-5 text-right"
-          placeholder="bony@frank.party"
+          placeholder="pony@frank.party"
         />
 
         <label className="block text-sm font-semibold text-slate-200 mb-2">
