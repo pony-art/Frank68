@@ -31,15 +31,13 @@ const chapters = [
     title: "طلع عايش… وخان تاني",
     body:
       "الصدمة إنه طلع عايش! رجع من تاني، لكن مش نادم — رجع مجرم حرب بيخون الحزب من ورا ضهره. دلوقتي اسمه محفور في سجل الخونة: مطلوب حي أو ميت.",
-    poster: "/traitor.png",
   },
   {
     icon: ShieldCheck,
     tag: "الفصل الخامس",
     title: "البطل بوني يُنقذ الحزب",
     body:
-      "في أحلك لحظة، وقف بوني. جمّع المخلصين، طرد الخيانة، ووحّد الصفوف من تاني. أنقذ الحزب من الضياع وأعاده أقوى ما كان.",
-    hero: "/hero-bony.png",
+      "في أحلك لحظة, وقف بوني. جمّع المخلصين، طرد الخيانة، ووحّد الصفوف من تاني. أنقذ الحزب من الضياع وأعاده أقوى ما كان.",
   },
   {
     icon: Crown,
@@ -65,31 +63,24 @@ export default function Story() {
       </h1>
       <p className="text-slate-300 leading-relaxed max-w-2xl mb-14">
         قصة خيانة وبطولة… إزاي خان محمد صداح الحزب وهرب، وإزاي رجع البطل بوني وأنقذ
-        كل حاجة وبقى الرئيس. اقرأها لآخرها.
+        كل حاجة وبقى الرئيس.
       </p>
 
       {/* wanted banner */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="mb-16 rounded-2xl border border-red-500/40 bg-red-500/5 p-5 sm:p-6 flex items-center gap-5 flex-wrap"
+        className="mb-16 rounded-2xl border border-red-500/40 bg-red-500/5 p-5 sm:p-6"
         data-testid="wanted-banner"
       >
-        <img
-          src="/traitor.png"
-          alt="مجرم الحرب محمد صداح"
-          className="w-24 h-24 rounded-xl object-cover border border-red-500/40 shadow-[0_0_25px_rgba(255,30,60,0.35)]"
-        />
-        <div className="flex-1 min-w-[220px]">
-          <div className="font-mono text-xs text-red-400 tracking-widest mb-1">
-            WANTED · مطلوب حي أو ميت
-          </div>
-          <div className="font-display text-2xl font-extrabold text-red-300">
-            محمد صداح
-          </div>
-          <div className="text-sm text-slate-400 mt-1">
-            التهمة: خيانة الحزب والهروب · مجرم حرب · اسمه في السجل الأحمر للأبد.
-          </div>
+        <div className="font-mono text-xs text-red-400 tracking-widest mb-1">
+          WANTED · مطلوب حي أو ميت
+        </div>
+        <div className="font-display text-2xl font-extrabold text-red-300">
+          محمد صداح
+        </div>
+        <div className="text-sm text-slate-400 mt-1">
+          التهمة: خيانة الحزب والهروب · مجرم حرب · اسمه في السجل الأحمر للأبد.
         </div>
       </motion.div>
 
@@ -120,20 +111,6 @@ export default function Story() {
                     {c.title}
                   </h2>
                   <p className="text-slate-300 leading-loose">{c.body}</p>
-                  {c.poster && (
-                    <img
-                      src={c.poster}
-                      alt="الخاين محمد صداح"
-                      className="mt-5 w-full max-h-72 object-cover rounded-lg border border-red-500/30"
-                    />
-                  )}
-                  {c.hero && (
-                    <img
-                      src={c.hero}
-                      alt="البطل القايد بوني"
-                      className="mt-5 w-full max-h-80 object-cover rounded-lg border border-red-500/30 shadow-[0_0_25px_rgba(255,30,60,0.25)]"
-                    />
-                  )}
                 </div>
               </motion.div>
             );
