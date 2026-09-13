@@ -130,7 +130,7 @@ export default function Home() {
             const Icon = fixedIcons[i % fixedIcons.length];
             return (
               <motion.div
-                key={i}
+                key={rule}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

@@ -16,7 +16,7 @@ def _load_frontend_env():
 _load_frontend_env()
 BASE_URL = os.environ["REACT_APP_BACKEND_URL"].rstrip("/")
 API = f"{BASE_URL}/api"
-ADMIN_EMAIL = "bony@frank.party"
+ADMIN_EMAIL = "pony@frank.party"
 ADMIN_PASSWORD = "FrankLeader#2026"
 
 

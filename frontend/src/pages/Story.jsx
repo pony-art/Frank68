@@ -99,7 +99,7 @@ export default function Story() {
             const Icon = c.icon;
             return (
               <motion.div
-                key={i}
+                key={c.tag}
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-80px" }}

@@ -8,13 +8,6 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-// Attach bearer token fallback (in case cookies are blocked)
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("frank_token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
-
 export function formatApiErrorDetail(detail) {
   if (detail == null) return "حصل خطأ، جرّب تاني.";
   if (typeof detail === "string") return detail;

@@ -7,10 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // null = checking, false = anon, object = logged in
 
   useEffect(() => {
-    if (!localStorage.getItem("frank_token")) {
-      setUser(false);
-      return;
-    }
+    // Auth relies on httpOnly cookies set by the backend (no token in localStorage).
     api
       .get("/auth/me")
       .then((res) => setUser(res.data))
@@ -19,7 +16,6 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const { data } = await api.post("/auth/login", { email, password });
-    if (data.access_token) localStorage.setItem("frank_token", data.access_token);
     setUser({ id: data.id, email: data.email, name: data.name, role: data.role });
     return data;
   };
@@ -27,10 +23,9 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await api.post("/auth/logout");
-    } catch (e) {
-      /* ignore */
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
-    localStorage.removeItem("frank_token");
     setUser(false);
   };
 

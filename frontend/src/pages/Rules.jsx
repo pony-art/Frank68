@@ -24,7 +24,7 @@ export default function Rules() {
       <div className="space-y-4">
         {(content?.party_rules || []).map((rule, i) => (
           <motion.div
-            key={i}
+            key={rule}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.08 }}
@@ -48,7 +48,7 @@ export default function Rules() {
         <div className="space-y-3">
           {(content?.fixed_rules || []).map((rule, i) => (
             <div
-              key={i}
+              key={rule}
               className="rounded-xl p-5 border border-rose-500/30 bg-rose-500/5 text-rose-100 leading-relaxed"
               data-testid={`fixed-rule-${i}`}
             >

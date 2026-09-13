@@ -1,0 +1,37 @@
+{
+  "summary": "Iteration 3 verified cookie-only auth migration and full regression. Backend: 37/37 pytest pass (added test_cookie_auth.py with 7 tests validating: login sets httpOnly+secure+samesite=none cookies, /auth/me works via cookie only without Authorization header, logout clears cookies and subsequent /auth/me returns 401, wrong password 401, admin route /api/admin/stats accessible via cookie and 401 anonymously). Fixed pre-existing test files that hardcoded 'bony@frank.party' -> 'pony@frank.party' (matches backend/.env ADMIN_EMAIL and /app/memory/test_credentials.md). Frontend Playwright: (a) admin login pony@frank.party / FrankLeader#2026 redirects to /admin; (b) hard reload of /admin keeps session (cookie-based) - logout button still visible; (c) admin-logout-button clears cookies, redirects to /login, and visiting /admin post-logout redirects back to /login (guard works: setUser(false) branch); (d) wrong password stays on /login and shows Sonner toast 'الإيميل أو الباسورد غلط'. Admin tabs Stats (2 recharts SVGs) and Logs load via cookie auth. Public flows all work: home renders (Arabic title), rules page has content, apply form submits and shows success message 'تم استلام طلبك'. No functional console errors - only expected 401 from anonymous GET /api/auth/me on public pages (documented/acceptable).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Public pages (Home/Rules/Story/Apply)", "issues": ["AuthProvider unconditionally calls GET /api/auth/me on mount, producing a 401 for anonymous visitors and a 'Failed to load resource' error in the browser console on every public page. UI still works, but this is console noise. Consider a lazy check (only call /auth/me when navigating to /admin) or downgrade the request to not log an error."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_frank_party.py",
+    "/app/backend/tests/test_new_features.py",
+    "/app/backend/tests/test_cookie_auth.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Nice-to-have) Silence anonymous /api/auth/me 401 console error on public pages (skip the call when there is no auth intent, or handle 401 without console.error)."
+  ],
+  "critical_code_review_comments": [
+    "Cookie config uses samesite=none + secure=true - correct for the current preview domain (frontend & backend share origin). If backend is ever deployed on a different domain from the frontend, ensure the TLS certificate + cross-site cookie policy still hold; otherwise switch to samesite=lax when same-site.",
+    "AuthContext.login() reads {id,email,name,role} from POST /auth/login response but the response also still includes access_token (used only as a Bearer fallback). Since axios has withCredentials:true and there is no localStorage token, the access_token field in the login payload is now dead data on the client - consider removing it from the response or documenting the fallback path.",
+    "Admin.jsx is still ~847 lines (carry-over from iter 2) - splitting the panels into pages/admin/* modules would improve maintainability.",
+    "login_attempts lockout still refreshes locked_until on every failure after threshold (carry-over from iter 1)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_frank_party.py",
+    "/app/backend/tests/test_new_features.py",
+    "/app/backend/tests/test_cookie_auth.py"
+  ],
+  "success_rate": {"backend": "100% (37/37)", "frontend": "100% of tested flows (11/11)"},
+  "test_credentials": "pony@frank.party / FrankLeader#2026 (verified via cookie login, /auth/me, admin routes)",
+  "seed_data_creation": "Tests create/cleanup TEST_ prefixed members/ranks/applications. One TEST_ui_<ts> application submitted via UI apply form remains in pending queue (safe to leave or admin can reject).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Auth is httpOnly-cookie only (samesite=none, secure=true). Backend login response still includes access_token for Bearer fallback but frontend does NOT store it (no localStorage). To test cookie flows via requests, use a single requests.Session() across login+subsequent calls - the jar carries the cookies. In Playwright, page reload preserves the session automatically. Admin email is pony@frank.party (NOT bony). Append ?nointro=1 to any URL to bypass the cinematic intro. Sonner toasts do not use `.error` class - detect via `[data-sonner-toast]` selector."
+}

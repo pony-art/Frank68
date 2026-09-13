@@ -6,7 +6,7 @@ import requests
 
 BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://discord-faction-1.preview.emergentagent.com").rstrip("/")
 API = f"{BASE_URL}/api"
-ADMIN_EMAIL = "bony@frank.party"
+ADMIN_EMAIL = "pony@frank.party"
 ADMIN_PASSWORD = "FrankLeader#2026"
 
 
