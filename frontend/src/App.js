@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { CyberBackground } from "@/components/CyberBackground";
 import Home from "@/pages/Home";
 import Rules from "@/pages/Rules";
+import Story from "@/pages/Story";
 import Apply from "@/pages/Apply";
 import Login from "@/pages/Login";
 import Admin from "@/pages/Admin";
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/rules" element={<Rules />} />
+            <Route path="/story" element={<Story />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<Admin />} />
