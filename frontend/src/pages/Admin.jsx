@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
   Inbox, Users, Coins, Crown, FileEdit, Bot, LogOut, Check, X,
-  Plus, Minus, Trash2, Save, Loader2, Clock, Skull, BarChart3, ScrollText, Award,
+  Plus, Minus, Trash2, Save, Loader2, Clock, BarChart3, ScrollText, Award,
 } from "lucide-react";
 import {
   BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis,
@@ -16,7 +16,6 @@ const TABS = [
   { id: "members", name: "الأعضاء", icon: Users, testid: "admin-tab-members" },
   { id: "points", name: "النقاط", icon: Coins, testid: "admin-tab-points" },
   { id: "ranks", name: "الرتب", icon: Crown, testid: "admin-tab-ranks" },
-  { id: "shame", name: "سجل الخونة", icon: Skull, testid: "admin-tab-shame" },
   { id: "stats", name: "الإحصائيات", icon: BarChart3, testid: "admin-tab-stats" },
   { id: "logs", name: "السجل", icon: ScrollText, testid: "admin-tab-logs" },
   { id: "editor", name: "المحتوى", icon: FileEdit, testid: "admin-tab-editor" },
@@ -89,7 +88,6 @@ export default function Admin() {
       {tab === "members" && <Members />}
       {tab === "points" && <Points />}
       {tab === "ranks" && <Ranks />}
-      {tab === "shame" && <Shame />}
       {tab === "stats" && <Stats />}
       {tab === "logs" && <Logs />}
       {tab === "editor" && <Editor />}
@@ -627,75 +625,6 @@ function Discord() {
   );
 }
 
-/* ---------------- Hall of Shame (traitors) ---------------- */
-function Shame() {
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [f, setF] = useState({ name: "", role_before: "", crime: "", date: "" });
-
-  const load = useCallback(() => {
-    setLoading(true);
-    api.get("/traitors").then((r) => setList(r.data)).catch(err).finally(() => setLoading(false));
-  }, []);
-  useEffect(() => load(), [load]);
-
-  const add = async () => {
-    if (!f.name.trim() || !f.crime.trim()) {
-      toast.error("الاسم والتهمة مطلوبين");
-      return;
-    }
-    try {
-      await api.post("/traitors", f);
-      setF({ name: "", role_before: "", crime: "", date: "" });
-      toast.success("تمت الإضافة لسجل الخونة");
-      load();
-    } catch (e) {
-      err(e);
-    }
-  };
-  const del = async (id) => {
-    try {
-      await api.delete(`/traitors/${id}`);
-      toast.success("تم الحذف من السجل");
-      load();
-    } catch (e) {
-      err(e);
-    }
-  };
-
-  return (
-    <div>
-      <div className="cyber-card rounded-xl p-5 mb-6 grid sm:grid-cols-2 gap-3">
-        <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="اسم الخاين" data-testid="input-traitor-name" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
-        <input value={f.role_before} onChange={(e) => setF({ ...f, role_before: e.target.value })} placeholder="منصبه قبل الخيانة" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
-        <input value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} placeholder="التاريخ" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
-        <input value={f.crime} onChange={(e) => setF({ ...f, crime: e.target.value })} placeholder="التهمة" data-testid="input-traitor-crime" className="cyber-input rounded-lg px-4 py-2.5 text-right" />
-        <button onClick={add} data-testid="admin-add-traitor-button" className="cyber-btn rounded-lg px-5 py-2.5 font-bold flex items-center justify-center gap-2 sm:col-span-2">
-          <Plus size={16} /> إضافة للسجل الأحمر
-        </button>
-      </div>
-      {loading ? <Spinner /> : !list.length ? <Empty text="السجل فاضي" /> : (
-        <div className="space-y-4" data-testid="traitors-list">
-          {list.map((t) => (
-            <div key={t.id} className="cyber-card rounded-xl p-5 border-red-500/30 flex items-start justify-between gap-4">
-              <div className="flex items-start gap-3">
-                <Skull className="text-red-400 mt-1 shrink-0" size={22} />
-                <div>
-                  <div className="font-display text-lg font-extrabold text-red-300">{t.name}</div>
-                  {t.role_before && <div className="text-xs text-slate-500 mt-0.5">{t.role_before}</div>}
-                  <div className="text-sm text-slate-300 mt-1">{t.crime}</div>
-                  {t.date && <div className="text-xs font-mono text-slate-600 mt-1">{t.date}</div>}
-                </div>
-              </div>
-              <button onClick={() => del(t.id)} className="text-rose-400 hover:text-rose-300 p-2"><Trash2 size={18} /></button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /* ---------------- Stats ---------------- */
 const CHART_COLORS = ["#f59e0b", "#22c55e", "#f43f5e", "#FF1E3C", "#C40021", "#FF4D6D"];
 function Stats() {
@@ -707,9 +636,9 @@ function Stats() {
 
   const cards = [
     { label: "إجمالي الأعضاء", value: data.members_total, color: "text-red-300" },
-    { label: "الخونة في السجل", value: data.traitors_total, color: "text-rose-300" },
     { label: "طلبات قيد المراجعة", value: data.applications_by_status.find((x) => x.status === "قيد المراجعة")?.count || 0, color: "text-amber-300" },
     { label: "طلبات مقبولة", value: data.applications_by_status.find((x) => x.status === "مقبول")?.count || 0, color: "text-emerald-300" },
+    { label: "طلبات مرفوضة", value: data.applications_by_status.find((x) => x.status === "مرفوض")?.count || 0, color: "text-rose-300" },
   ];
 
   return (

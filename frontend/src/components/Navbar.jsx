@@ -9,7 +9,6 @@ const links = [
   { to: "/", label: "الرئيسية", id: "nav-link-home" },
   { to: "/rules", label: "قوانين الحزب", id: "nav-link-rules" },
   { to: "/story", label: "الحكاية", id: "nav-link-story" },
-  { to: "/shame", label: "سجل الخونة", id: "nav-link-shame" },
   { to: "/apply", label: "تقديم طلب", id: "nav-link-apply" },
 ];
 

@@ -9,7 +9,6 @@ import { IntroScreen } from "@/components/IntroScreen";
 import Home from "@/pages/Home";
 import Rules from "@/pages/Rules";
 import Story from "@/pages/Story";
-import HallOfShame from "@/pages/HallOfShame";
 import Apply from "@/pages/Apply";
 import Login from "@/pages/Login";
 import Admin from "@/pages/Admin";
@@ -27,7 +26,6 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/story" element={<Story />} />
-              <Route path="/shame" element={<HallOfShame />} />
               <Route path="/apply" element={<Apply />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<Admin />} />
