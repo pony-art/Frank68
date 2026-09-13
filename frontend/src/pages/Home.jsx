@@ -44,16 +44,16 @@ export default function Home() {
             className="mb-8"
           >
             <div className="relative inline-block">
-              <div className="absolute inset-0 blur-2xl bg-cyan-500/30 rounded-full" />
+              <div className="absolute inset-0 blur-2xl bg-red-500/30 rounded-full" />
               <img
                 src="/skull-logo-text.png"
                 alt="شعار حزب محبين فرانك الجيزاوي"
-                className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-2xl border border-cyan-500/30 object-cover shadow-[0_0_40px_rgba(0,240,255,0.35)]"
+                className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-2xl border border-red-500/30 object-cover shadow-[0_0_40px_rgba(255,30,60,0.35)]"
                 data-testid="hero-logo"
               />
             </div>
           </motion.div>
-          <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-cyan-400 border border-cyan-500/30 rounded-full px-4 py-1.5">
+          <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-red-400 border border-red-500/30 rounded-full px-4 py-1.5">
             <Sparkles size={14} /> نظام النخبة السرّي
           </span>
           <h1
@@ -138,8 +138,8 @@ export default function Home() {
       {/* About */}
       <section className="max-w-7xl mx-auto px-5 py-16">
         <div className="cyber-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
-          <div className="absolute -top-16 -left-16 w-48 h-48 bg-fuchsia-600/20 blur-3xl rounded-full" />
-          <div className="flex items-center gap-2 mb-4 text-cyan-400">
+          <div className="absolute -top-16 -left-16 w-48 h-48 bg-rose-600/20 blur-3xl rounded-full" />
+          <div className="flex items-center gap-2 mb-4 text-red-400">
             <Users size={18} />
             <span className="font-mono text-xs uppercase tracking-widest">عن الحزب</span>
           </div>

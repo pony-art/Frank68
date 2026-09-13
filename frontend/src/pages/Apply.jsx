@@ -72,7 +72,7 @@ export default function Apply() {
         className="cyber-card rounded-2xl p-6 sm:p-8 space-y-6"
       >
         <div>
-          <label className="block text-sm font-semibold text-cyan-300 mb-2">
+          <label className="block text-sm font-semibold text-red-300 mb-2">
             اسم حساب الديسكورد <span className="text-rose-500">*</span>
           </label>
           <input
@@ -107,7 +107,7 @@ export default function Apply() {
             data-testid="checkbox-agree-rules"
             checked={agreed}
             onChange={(e) => setAgreed(e.target.checked)}
-            className="mt-1 w-5 h-5 accent-cyan-400"
+            className="mt-1 w-5 h-5 accent-red-400"
           />
           <span className="text-sm text-slate-300 leading-relaxed">
             أقرّ بالالتزام بكل قوانين الحزب والخطوط الحمراء (ممنوع الكذب، ممنوع

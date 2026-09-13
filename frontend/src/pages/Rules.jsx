@@ -12,7 +12,7 @@ export default function Rules() {
 
   return (
     <div className="relative z-10 max-w-4xl mx-auto px-5 pt-32 pb-20">
-      <div className="flex items-center gap-3 text-cyan-400 mb-2">
+      <div className="flex items-center gap-3 text-red-400 mb-2">
         <ScrollText size={20} />
         <span className="font-mono text-xs uppercase tracking-widest">دستور الحزب</span>
       </div>

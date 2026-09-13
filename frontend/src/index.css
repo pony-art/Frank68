@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-    --bg: #06070b;
-    --surface: #0b0e14;
-    --card: #10141f;
-    --cyan: #00f0ff;
-    --purple: #d000ff;
-    --pink: #ff007a;
+    --bg: #0a0203;
+    --surface: #120406;
+    --card: #17070a;
+    --red: #ff1e3c;
+    --crimson: #c40021;
+    --rose: #ff4d6d;
 }
 
 * {
@@ -18,7 +18,7 @@
 body {
     margin: 0;
     background: var(--bg);
-    color: #f1f5f9;
+    color: #f5f1f2;
     font-family: "Cairo", "Tajawal", sans-serif;
     -webkit-font-smoothing: antialiased;
     direction: rtl;
@@ -35,7 +35,7 @@ code,
 }
 
 ::selection {
-    background: var(--pink);
+    background: var(--red);
     color: #000;
 }
 
@@ -44,34 +44,34 @@ code,
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: #06070b;
+    background: #0a0203;
 }
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(var(--cyan), var(--purple));
+    background: linear-gradient(var(--red), var(--crimson));
     border-radius: 8px;
 }
 
 @layer base {
     :root {
-        --background: 222 47% 4%;
-        --foreground: 210 40% 96%;
-        --card: 222 40% 9%;
-        --card-foreground: 210 40% 96%;
-        --popover: 222 47% 6%;
-        --popover-foreground: 210 40% 96%;
-        --primary: 186 100% 50%;
-        --primary-foreground: 222 47% 4%;
-        --secondary: 222 30% 14%;
-        --secondary-foreground: 210 40% 96%;
-        --muted: 222 30% 14%;
-        --muted-foreground: 215 20% 65%;
-        --accent: 286 100% 50%;
-        --accent-foreground: 210 40% 96%;
-        --destructive: 342 100% 55%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 222 30% 18%;
-        --input: 222 30% 16%;
-        --ring: 186 100% 50%;
+        --background: 348 60% 3%;
+        --foreground: 350 20% 96%;
+        --card: 348 55% 7%;
+        --card-foreground: 350 20% 96%;
+        --popover: 348 60% 5%;
+        --popover-foreground: 350 20% 96%;
+        --primary: 350 100% 56%;
+        --primary-foreground: 348 60% 4%;
+        --secondary: 348 30% 13%;
+        --secondary-foreground: 350 20% 96%;
+        --muted: 348 25% 13%;
+        --muted-foreground: 350 12% 65%;
+        --accent: 348 100% 45%;
+        --accent-foreground: 350 20% 96%;
+        --destructive: 0 90% 55%;
+        --destructive-foreground: 350 20% 98%;
+        --border: 348 35% 16%;
+        --input: 348 30% 14%;
+        --ring: 350 100% 56%;
         --radius: 0.5rem;
     }
 }
@@ -82,27 +82,22 @@ code,
     }
 }
 
-/* ---------- Cyberpunk utilities ---------- */
+/* ---------- Black & Red neon utilities ---------- */
 .neon-cyan {
-    color: var(--cyan);
+    color: var(--red);
     text-shadow:
-        0 0 8px rgba(0, 240, 255, 0.7),
-        0 0 20px rgba(0, 240, 255, 0.4);
+        0 0 8px rgba(255, 30, 60, 0.7),
+        0 0 20px rgba(255, 30, 60, 0.4);
 }
 .neon-pink {
-    color: var(--pink);
+    color: var(--rose);
     text-shadow:
-        0 0 8px rgba(255, 0, 122, 0.7),
-        0 0 20px rgba(255, 0, 122, 0.4);
+        0 0 8px rgba(255, 77, 109, 0.7),
+        0 0 20px rgba(255, 77, 109, 0.4);
 }
 
 .neon-gradient-text {
-    background: linear-gradient(
-        90deg,
-        var(--cyan),
-        var(--purple),
-        var(--pink)
-    );
+    background: linear-gradient(90deg, var(--rose), var(--red), var(--crimson));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -110,10 +105,10 @@ code,
 
 .cyber-grid {
     background-image:
-        linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 30, 60, 0.05) 1px, transparent 1px),
         linear-gradient(
             to bottom,
-            rgba(0, 240, 255, 0.05) 1px,
+            rgba(255, 30, 60, 0.05) 1px,
             transparent 1px
         );
     background-size: 4rem 4rem;
@@ -136,8 +131,8 @@ code,
 }
 
 .cyber-card {
-    background: rgba(16, 20, 31, 0.75);
-    border: 1px solid rgba(0, 240, 255, 0.15);
+    background: rgba(23, 7, 10, 0.75);
+    border: 1px solid rgba(255, 30, 60, 0.15);
     backdrop-filter: blur(12px);
     transition:
         border-color 0.3s ease,
@@ -145,15 +140,15 @@ code,
         transform 0.3s ease;
 }
 .cyber-card:hover {
-    border-color: rgba(0, 240, 255, 0.5);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+    border-color: rgba(255, 30, 60, 0.5);
+    box-shadow: 0 0 25px rgba(255, 30, 60, 0.15);
 }
 
 .cyber-btn {
     position: relative;
-    border: 1px solid rgba(0, 240, 255, 0.5);
-    background: rgba(0, 240, 255, 0.08);
-    color: var(--cyan);
+    border: 1px solid rgba(255, 30, 60, 0.5);
+    background: rgba(255, 30, 60, 0.08);
+    color: var(--red);
     transition:
         background-color 0.25s ease,
         color 0.25s ease,
@@ -161,9 +156,9 @@ code,
         transform 0.15s ease;
 }
 .cyber-btn:hover {
-    background: var(--cyan);
+    background: var(--red);
     color: #000;
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    box-shadow: 0 0 25px rgba(255, 30, 60, 0.6);
     transform: translateY(-2px);
 }
 .cyber-btn:active {
@@ -171,25 +166,25 @@ code,
 }
 
 .cyber-btn-pink {
-    border-color: rgba(255, 0, 122, 0.5);
-    background: rgba(255, 0, 122, 0.08);
-    color: var(--pink);
+    border-color: rgba(196, 0, 33, 0.6);
+    background: rgba(196, 0, 33, 0.1);
+    color: var(--rose);
 }
 .cyber-btn-pink:hover {
-    background: var(--pink);
-    color: #000;
-    box-shadow: 0 0 25px rgba(255, 0, 122, 0.6);
+    background: var(--crimson);
+    color: #fff;
+    box-shadow: 0 0 25px rgba(196, 0, 33, 0.6);
 }
 
 .cyber-input {
-    background: rgba(11, 14, 20, 0.9);
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    color: #f1f5f9;
+    background: rgba(18, 4, 6, 0.9);
+    border: 1px solid rgba(180, 90, 100, 0.25);
+    color: #f5f1f2;
     transition: all 0.25s ease;
 }
 .cyber-input:focus {
-    border-color: var(--cyan);
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    border-color: var(--red);
+    box-shadow: 0 0 15px rgba(255, 30, 60, 0.3);
     outline: none;
 }
 
@@ -208,13 +203,13 @@ code,
 }
 .glitch::before {
     left: 2px;
-    text-shadow: -2px 0 var(--pink);
+    text-shadow: -2px 0 var(--rose);
     animation: glitch-anim 3s infinite linear alternate-reverse;
     clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 .glitch::after {
     left: -2px;
-    text-shadow: -2px 0 var(--cyan);
+    text-shadow: -2px 0 var(--crimson);
     animation: glitch-anim2 2.5s infinite linear alternate-reverse;
     clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }

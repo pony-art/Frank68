@@ -33,7 +33,7 @@ export default function Admin() {
   if (user === null)
     return (
       <div className="relative z-10 min-h-screen grid place-items-center">
-        <Loader2 className="animate-spin text-cyan-400" size={40} />
+        <Loader2 className="animate-spin text-red-400" size={40} />
       </div>
     );
   if (!user) return null;
@@ -42,7 +42,7 @@ export default function Admin() {
     <div className="relative z-10 max-w-7xl mx-auto px-5 pt-28 pb-20">
       <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
         <div>
-          <div className="font-mono text-xs uppercase tracking-widest text-cyan-400">
+          <div className="font-mono text-xs uppercase tracking-widest text-red-400">
             Leader Control Center
           </div>
           <h1 className="font-display text-3xl sm:text-4xl font-extrabold neon-cyan">
@@ -69,7 +69,7 @@ export default function Admin() {
               onClick={() => setTab(t.id)}
               className={`px-4 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all ${
                 tab === t.id
-                  ? "bg-cyan-500/15 text-cyan-300 border border-cyan-500/40"
+                  ? "bg-red-500/15 text-red-300 border border-red-500/40"
                   : "text-slate-400 hover:bg-white/5 border border-transparent"
               }`}
             >
@@ -129,7 +129,7 @@ function Applications() {
         <div key={a.id} className="cyber-card rounded-xl p-5">
           <div className="flex items-start justify-between flex-wrap gap-3">
             <div>
-              <div className="font-bold text-lg text-cyan-300">{a.discord_username}</div>
+              <div className="font-bold text-lg text-red-300">{a.discord_username}</div>
               <div className="text-xs text-slate-500 font-mono flex items-center gap-1 mt-1">
                 <Clock size={12} /> {new Date(a.created_at).toLocaleString("ar-EG")}
               </div>
@@ -231,9 +231,9 @@ function Members() {
           {members.map((m) => (
             <div key={m.id} className="cyber-card rounded-xl p-5 flex items-center justify-between">
               <div>
-                <div className="font-bold text-cyan-300">{m.discord_username}</div>
+                <div className="font-bold text-red-300">{m.discord_username}</div>
                 <div className="text-sm text-slate-400 mt-1">
-                  <span className="text-fuchsia-400">{m.rank}</span> · {m.points} نقطة
+                  <span className="text-rose-400">{m.rank}</span> · {m.points} نقطة
                 </div>
               </div>
               <button
@@ -286,9 +286,9 @@ function Points() {
       {members.map((m) => (
         <div key={m.id} className="cyber-card rounded-xl p-5 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <div className="font-bold text-cyan-300">{m.discord_username}</div>
+            <div className="font-bold text-red-300">{m.discord_username}</div>
             <div className="text-sm text-slate-400 mt-1">
-              <span className="text-fuchsia-400">{m.rank}</span> ·{" "}
+              <span className="text-rose-400">{m.rank}</span> ·{" "}
               <span className="neon-gradient-text font-bold">{m.points}</span> نقطة
             </div>
           </div>
@@ -325,7 +325,7 @@ function Ranks() {
   const [ranks, setRanks] = useState([]);
   const [name, setName] = useState("");
   const [min, setMin] = useState("");
-  const [color, setColor] = useState("#00F0FF");
+  const [color, setColor] = useState("#FF1E3C");
 
   const load = useCallback(() => {
     api.get("/ranks").then((r) => setRanks(r.data)).catch(err);
@@ -460,7 +460,7 @@ function Editor() {
   return (
     <div className="space-y-8">
       <div className="cyber-card rounded-xl p-6 space-y-4">
-        <h3 className="font-display text-xl font-bold text-cyan-300">نصوص الموقع</h3>
+        <h3 className="font-display text-xl font-bold text-red-300">نصوص الموقع</h3>
         <Field label="عنوان الحزب" value={content.party_title} onChange={(v) => setField("party_title", v)} testid="edit-party-title" />
         <Field label="الوصف تحت العنوان" value={content.party_subtitle} onChange={(v) => setField("party_subtitle", v)} textarea testid="edit-party-subtitle" />
         <Field label="نبذة عن الحزب" value={content.about_text} onChange={(v) => setField("about_text", v)} textarea testid="edit-about" />
@@ -474,7 +474,7 @@ function Editor() {
       </div>
 
       <div className="cyber-card rounded-xl p-6 space-y-4">
-        <h3 className="font-display text-xl font-bold text-fuchsia-300">أسئلة التقديم</h3>
+        <h3 className="font-display text-xl font-bold text-rose-300">أسئلة التقديم</h3>
         {questions.map((q, i) => (
           <div key={q.id} className="flex gap-2 items-center">
             <input
@@ -598,7 +598,7 @@ function ListEditor({ title, k, items, setList, add, remove }) {
           </div>
         ))}
       </div>
-      <button onClick={() => add(k)} className="mt-2 text-cyan-400 text-sm font-bold flex items-center gap-1 hover:text-cyan-300">
+      <button onClick={() => add(k)} className="mt-2 text-red-400 text-sm font-bold flex items-center gap-1 hover:text-red-300">
         <Plus size={14} /> إضافة سطر
       </button>
     </div>
@@ -618,7 +618,7 @@ function StatusBadge({ status }) {
 function Spinner() {
   return (
     <div className="py-20 grid place-items-center">
-      <Loader2 className="animate-spin text-cyan-400" size={32} />
+      <Loader2 className="animate-spin text-red-400" size={32} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ export function CyberBackground() {
           right: "-10%",
           width: 500,
           height: 500,
-          background: "rgba(0,240,255,0.10)",
+          background: "rgba(255,30,60,0.12)",
         }}
       />
       <div
@@ -19,7 +19,7 @@ export function CyberBackground() {
           left: "-10%",
           width: 600,
           height: 600,
-          background: "rgba(208,0,255,0.10)",
+          background: "rgba(196,0,33,0.12)",
         }}
       />
     </>

@@ -33,7 +33,7 @@ export default function Login() {
         data-testid="admin-login-form"
         className="cyber-card rounded-2xl p-8 w-full max-w-md"
       >
-        <div className="flex items-center gap-2 text-cyan-400 mb-1 font-mono text-xs uppercase tracking-widest">
+        <div className="flex items-center gap-2 text-red-400 mb-1 font-mono text-xs uppercase tracking-widest">
           <Terminal size={14} /> نظام الدخول المشفّر
         </div>
         <h1 className="font-display text-3xl font-extrabold neon-cyan mb-8 flex items-center gap-2">

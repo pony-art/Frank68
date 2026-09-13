@@ -24,14 +24,14 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 border-b border-cyan-500/10 bg-[#06070b]/80 backdrop-blur-xl">
+    <header className="fixed top-0 inset-x-0 z-40 border-b border-red-500/10 bg-[#06070b]/80 backdrop-blur-xl">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-5 py-3">
         <Link
           to="/"
           data-testid="nav-brand-logo"
           className="flex items-center gap-2 group"
         >
-          <span className="grid place-items-center w-10 h-10 rounded-md border border-cyan-500/40 bg-cyan-500/5 overflow-hidden group-hover:shadow-[0_0_18px_rgba(0,240,255,0.5)] transition-all">
+          <span className="grid place-items-center w-10 h-10 rounded-md border border-red-500/40 bg-red-500/5 overflow-hidden group-hover:shadow-[0_0_18px_rgba(255,30,60,0.5)] transition-all">
             <img
               src="/skull-logo.png"
               alt="شعار حزب فرانك"
@@ -51,8 +51,8 @@ export function Navbar() {
               data-testid={l.id}
               className={`px-4 py-2 rounded-md text-sm font-semibold transition-all ${
                 pathname === l.to
-                  ? "text-cyan-300 bg-cyan-500/10"
-                  : "text-slate-400 hover:text-cyan-300 hover:bg-white/5"
+                  ? "text-red-300 bg-red-500/10"
+                  : "text-slate-400 hover:text-red-300 hover:bg-white/5"
               }`}
             >
               {l.label}
@@ -61,7 +61,7 @@ export function Navbar() {
           <Link
             to={user ? "/admin" : "/login"}
             data-testid="nav-link-admin"
-            className="px-4 py-2 rounded-md text-sm font-semibold text-fuchsia-300 hover:bg-fuchsia-500/10 transition-all"
+            className="px-4 py-2 rounded-md text-sm font-semibold text-rose-300 hover:bg-rose-500/10 transition-all"
           >
             {user ? "لوحة القايد" : "دخول القايد"}
           </Link>
@@ -79,7 +79,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="md:hidden text-cyan-300"
+          className="md:hidden text-red-300"
           onClick={() => setOpen((v) => !v)}
           data-testid="nav-mobile-toggle"
         >
@@ -88,7 +88,7 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden border-t border-cyan-500/10 px-5 py-3 flex flex-col gap-1 bg-[#06070b]/95">
+        <div className="md:hidden border-t border-red-500/10 px-5 py-3 flex flex-col gap-1 bg-[#06070b]/95">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -102,7 +102,7 @@ export function Navbar() {
           <Link
             to={user ? "/admin" : "/login"}
             onClick={() => setOpen(false)}
-            className="px-4 py-2 rounded-md text-sm font-semibold text-fuchsia-300"
+            className="px-4 py-2 rounded-md text-sm font-semibold text-rose-300"
           >
             {user ? "لوحة القايد" : "دخول القايد"}
           </Link>
