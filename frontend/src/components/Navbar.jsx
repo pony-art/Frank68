@@ -33,7 +33,7 @@ export function Navbar() {
         >
           <span className="grid place-items-center w-10 h-10 rounded-md border border-cyan-500/40 bg-cyan-500/5 overflow-hidden group-hover:shadow-[0_0_18px_rgba(0,240,255,0.5)] transition-all">
             <img
-              src="/frank-logo.png"
+              src="/skull-logo.png"
               alt="شعار حزب فرانك"
               className="w-full h-full object-cover"
             />

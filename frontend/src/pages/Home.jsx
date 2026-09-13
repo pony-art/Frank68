@@ -46,9 +46,9 @@ export default function Home() {
             <div className="relative inline-block">
               <div className="absolute inset-0 blur-2xl bg-cyan-500/30 rounded-full" />
               <img
-                src="/frank-logo.png"
+                src="/skull-logo-text.png"
                 alt="شعار حزب محبين فرانك الجيزاوي"
-                className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl border border-cyan-500/30 object-cover shadow-[0_0_40px_rgba(0,240,255,0.35)]"
+                className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-2xl border border-cyan-500/30 object-cover shadow-[0_0_40px_rgba(0,240,255,0.35)]"
                 data-testid="hero-logo"
               />
             </div>
