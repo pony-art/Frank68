@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Zap, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 
@@ -31,8 +31,12 @@ export function Navbar() {
           data-testid="nav-brand-logo"
           className="flex items-center gap-2 group"
         >
-          <span className="grid place-items-center w-9 h-9 rounded-md border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 group-hover:shadow-[0_0_18px_rgba(0,240,255,0.5)] transition-all">
-            <Zap size={18} />
+          <span className="grid place-items-center w-10 h-10 rounded-md border border-cyan-500/40 bg-cyan-500/5 overflow-hidden group-hover:shadow-[0_0_18px_rgba(0,240,255,0.5)] transition-all">
+            <img
+              src="/frank-logo.png"
+              alt="شعار حزب فرانك"
+              className="w-full h-full object-cover"
+            />
           </span>
           <span className="font-display font-extrabold text-lg neon-cyan">
             حزب فرانك

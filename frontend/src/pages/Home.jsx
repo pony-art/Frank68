@@ -37,6 +37,22 @@ export default function Home() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl"
         >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9 }}
+            className="mb-8"
+          >
+            <div className="relative inline-block">
+              <div className="absolute inset-0 blur-2xl bg-cyan-500/30 rounded-full" />
+              <img
+                src="/frank-logo.png"
+                alt="شعار حزب محبين فرانك الجيزاوي"
+                className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-2xl border border-cyan-500/30 object-cover shadow-[0_0_40px_rgba(0,240,255,0.35)]"
+                data-testid="hero-logo"
+              />
+            </div>
+          </motion.div>
           <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-cyan-400 border border-cyan-500/30 rounded-full px-4 py-1.5">
             <Sparkles size={14} /> نظام النخبة السرّي
           </span>
