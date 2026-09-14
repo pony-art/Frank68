@@ -3,10 +3,14 @@
     with:
       node-version: 20
 
-  - name: Install & Build
+  - name: Install dependencies
     run: |
       cd frontend
       yarn install
+
+  - name: Build project
+    run: |
+      cd frontend
       yarn build
 
   - name: Setup Pages
@@ -16,7 +20,3 @@
     uses: actions/upload-pages-artifact@v3
     with:
       path: 'frontend/dist'
-
-  - name: Deploy to GitHub Pages
-    id: deployment
-    uses: actions/deploy-pages@v4
