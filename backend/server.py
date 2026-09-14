@@ -19,6 +19,8 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 
+import discord_bot
+
 # ----------------------------------------------------------------------------
 # DB / App setup
 # ----------------------------------------------------------------------------
@@ -253,10 +255,13 @@ async def seed():
 @app.on_event("startup")
 async def on_startup():
     await seed()
+    await db.config.update_one({"_id": "settings"}, {"$set": {"bot_connected": False}})
+    discord_bot.start_bot(db)
 
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
+    await discord_bot.stop_bot()
     client.close()
 
 
@@ -380,6 +385,10 @@ async def submit_application(payload: ApplicationCreate):
     }
     await db.applications.insert_one(dict(doc))
     logger.info(f"[DISCORD-NOTIFY] طلب جديد من {doc['discord_username']} — إشعار للقائد (DM + قناة)")
+    try:
+        await discord_bot.notify_new_application(doc)
+    except Exception as e:
+        logger.warning(f"discord notify failed: {e}")
     doc.pop("_id", None)
     return doc
 
@@ -413,6 +422,10 @@ async def approve_application(app_id: str, user: dict = Depends(get_current_user
                               "target": application["discord_username"], "by": user["email"],
                               "at": datetime.now(timezone.utc).isoformat()})
     logger.info(f"[DISCORD-BOT] قبول {application['discord_username']} — إعطاء رتبة + رسالة ترحيب غامضة")
+    try:
+        await discord_bot.grant_role_and_welcome(application["discord_username"])
+    except Exception as e:
+        logger.warning(f"discord role grant failed: {e}")
     return {"ok": True}
 
 
